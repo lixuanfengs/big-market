@@ -1,0 +1,2 @@
+# lxf-frame-archetype - DDD 脚手架
+
