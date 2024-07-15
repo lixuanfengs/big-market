@@ -6,14 +6,19 @@ import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.security.SecureRandom;
+
 @Slf4j
-@RunWith(SpringRunner.class)
-@SpringBootTest
 public class ApiTest {
 
     @Test
     public void test() {
-        log.info("测试完成");
+
+
+        int i = new SecureRandom().nextInt(6);
+        log.info("测试完成" + i);
     }
+
+
 
 }

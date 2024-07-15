@@ -1,5 +1,7 @@
 package cn.cactusli.infrastructure.persistent.po;
 
+import lombok.Data;
+
 import java.util.Date;
 
 /**
@@ -10,6 +12,7 @@ import java.util.Date;
  * @Date 2024/7/8 10:24
  * @Github https://github.com/lixuanfengs
  */
+@Data
 public class StrategyRule {
 
     /** 自增ID */
