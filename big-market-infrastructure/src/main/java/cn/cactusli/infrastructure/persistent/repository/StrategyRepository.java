@@ -12,6 +12,7 @@ import cn.cactusli.infrastructure.persistent.po.StrategyAward;
 import cn.cactusli.infrastructure.persistent.po.StrategyRule;
 import cn.cactusli.infrastructure.persistent.redis.IRedisService;
 import cn.cactusli.types.common.Constants;
+import com.alibaba.fastjson.JSONObject;
 import org.springframework.stereotype.Repository;
 
 import javax.annotation.Resource;
@@ -90,7 +91,7 @@ public class StrategyRepository implements IStrategyRepository {
     public StrategyEntity queryStrategyEntityByStrategyId(Long strategyId) {
         // 优先从缓存获取
         String cacheKey = Constants.RedisKey.STRATEGY_KEY + strategyId;
-        StrategyEntity strategyEntity = iRedisService.getValue(cacheKey);
+        StrategyEntity strategyEntity = ((JSONObject)iRedisService.getValue(cacheKey)).toJavaObject(StrategyEntity.class);
         if (null != strategyEntity) return strategyEntity;
         Strategy strategy = strategyDao.queryStrategyByStrategyId(strategyId);
         strategyEntity = StrategyEntity.builder()
@@ -116,6 +117,15 @@ public class StrategyRepository implements IStrategyRepository {
                 .ruleValue(strategyRuleRes.getRuleValue())
                 .ruleDesc(strategyRuleRes.getRuleDesc())
                 .build();
+    }
+
+    @Override
+    public String queryStrategyRuleValue(Long strategyId, Integer awardId, String ruleModel) {
+        StrategyRule strategyRule = new StrategyRule();
+        strategyRule.setStrategyId(strategyId);
+        strategyRule.setAwardId(awardId);
+        strategyRule.setRuleModel(ruleModel);
+        return strategyRuleDao.queryStrategyRuleValue(strategyRule);
     }
 
 }
